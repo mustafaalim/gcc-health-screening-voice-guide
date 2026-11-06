@@ -14,7 +14,7 @@ A working evaluation of an ElevenLabs Agents voice guide for annual health scree
 
 **The finding that matters:** the one safety-relevant failure appeared in Filipino, on a fasting rule the agent followed correctly in English, Hindi, Russian and Arabic. An English-only acceptance test would have passed this agent. Every clinical rule has to be tested in every language the hospital switches on.
 
-**Retest, 6 November 2026:** fixes applied and retested (details in [`test-log.md`](test-log.md)). Deterministic routing fixed the routing failure. The Filipino breakfast error did not recur in 3 runs. But asked about food, the agent still dropped one of the two fasting tests in English and Arabic, on two different models, so the fasting decision has to come from the hospital system, not the model.
+**Retest, 6 November 2026:** fixes applied and retested (details in [`test-log.md`](test-log.md)). Deterministic routing fixed the routing failure. The Filipino breakfast error did not recur in 3 runs. But asked about food, the agent still dropped one of the two fasting tests (English and Arabic on Qwen3.5, Arabic on Claude Sonnet 5.5), so the fasting decision has to come from the hospital system, not the model.
 
 **Demo:** _recording to be added_
 
