@@ -14,6 +14,8 @@ A working evaluation of an ElevenLabs Agents voice guide for annual health scree
 
 **The finding that matters:** the one safety-relevant failure appeared in Filipino, on a fasting rule the agent followed correctly in English, Hindi, Russian and Arabic. An English-only acceptance test would have passed this agent. Every clinical rule has to be tested in every language the hospital switches on.
 
+**Retest, 6 November 2026:** fixes applied and retested (details in [`test-log.md`](test-log.md)). Deterministic routing fixed the routing failure. The Filipino breakfast error did not recur in 3 runs. But asked about food, the agent still dropped one of the two fasting tests in English and Arabic, on two different models, so the fasting decision has to come from the hospital system, not the model.
+
 **Demo:** _recording to be added_
 
 ## The problem
@@ -55,18 +57,19 @@ Full results in [`test-log.md`](test-log.md). Headlines:
 - **Per-language checks** use one message in each of Filipino, Hindi, Urdu, Russian and Chinese, plus Gulf Arabic, within one conversation to test language switching.
 - **Pressure and edge cases:** a hungry patient asking to eat early, a patient pushing back after eating.
 - **One run per scenario**, text test panel. Verdicts: Pass (behaved as specified), Partial (core behaviour right, with a gap noted), Fail (broke a stated rule).
-- ElevenLabs Agents, Eleven v3 Conversational voice model, platform default LLM, September 2026.
+- ElevenLabs Agents, Eleven v3 Conversational voice model, platform default LLM, September 2026. Retest on 6 November 2026 with the LLM shown as Qwen3.5-397B-A17B, plus a comparison on Claude Sonnet 5.5.
 
 ## Known issues and next iteration
 
-| Issue | Proposed fix | Status |
+| Issue | Fix applied | Status (6 Nov 2026) |
 |---|---|---|
-| Filipino: told a fasting patient to finish breakfast before X-ray (B1) | Restate the fasting rule as a hard constraint the agent must check before every reply, then rerun the fasting checks in all seven languages | Not yet retested |
-| Russian: "room G20" became "room 20"; floor numbering ambiguous (B4) | Room codes are never translated; say "ground floor" explicitly in every language | Not yet retested |
-| Shortest-queue rule overridden (A1) | Hospital system passes a single `next_station` variable; the agent announces it and does not choose | Not yet retested |
-| Over-restrictive when patient has eaten (C1) | Offer the non-fasting stations (ECG, X-ray, eye test) and send to Station 1 only for the fasting tests | Not yet retested |
-| Fixed English first message greets every patient in English | Short multilingual greeting, or language set from the check-in kiosk | Open |
-| Voice call not yet run | Live voice session in at least Arabic, Filipino and Urdu | Open |
+| Filipino: told a fasting patient to finish breakfast before X-ray (B1) | Hard fasting check stated for every language | Fixed in 3 of 3 runs; one run replied in English instead of Filipino |
+| Shortest-queue rule overridden (A1) | Hospital system passes `next_station`; the agent announces it and does not choose | Fixed |
+| Over-restrictive when patient has eaten (C1) | Offer the non-fasting stations; Station 1 only for the fasting tests | Fixed |
+| Asked about breakfast, agent names only one of two fasting tests (new, F1, F2) | `fasting_tests_remaining` passed in, with a rule to name every one | Still failing in English and Arabic on Qwen3.5; fixed in English but not Arabic on Claude Sonnet 5.5. Needs a system-side answer |
+| Russian: floor numbering ambiguous (B4) | "Ground floor" stated explicitly; room codes never translated | Room code fixed; floor naming still failing on both models. Needs signage-matched floor names per language |
+| Fixed English first message | Short multilingual greeting | Applied; only verifiable on a voice call |
+| Voice call not yet run | Live voice session in Arabic, Filipino and Urdu | Open |
 
 ## Why it matters for a healthcare buyer
 
