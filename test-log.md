@@ -87,6 +87,8 @@ Note on C: `fasting_status` was changed while a conversation was open and may no
 
 ### v2.1, `fasting_tests_remaining` = "Station 3, Station 6"
 
+**Caveat, 8 November 2026:** the Claude Sonnet 5.5 rows below were run in the preview before the agent was ever published. The preview runs the published version, so they may not reflect Sonnet; B1 matched the Qwen reply word for word. Unverified until rerun.
+
 | # | Model | Input | Result | Verdict |
 |---|---|---|---|---|
 | F2 | Qwen3.5-397B-A17B | English, hungry | Still named only Station 6 | Fail |
