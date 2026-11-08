@@ -16,7 +16,7 @@ A working evaluation of an ElevenLabs Agents voice guide for annual health scree
 
 **Retest, 6 November 2026:** fixes applied and retested (details in [`test-log.md`](test-log.md)). Deterministic routing fixed the routing failure. The Filipino breakfast error did not recur in 3 runs. But asked about food, the agent still dropped one of the two fasting tests (English and Arabic on Qwen3.5, Arabic on Claude Sonnet 5.5), so the fasting decision has to come from the hospital system, not the model.
 
-**Demo:** _recording to be added_
+**Caveat, 8 November 2026:** the Claude Sonnet 5.5 comparison was run in the preview before this agent had ever been published. I later found that the preview runs the published version, not the draft, so those results may not have come from Sonnet; one "Sonnet" reply matched the Qwen reply word for word. Treat every Sonnet result here as unverified until rerun. The Qwen3.5 results are unaffected.
 
 ## The problem
 
